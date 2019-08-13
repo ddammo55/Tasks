@@ -19,12 +19,18 @@ class TaskController extends Controller
     	return view('tasks.create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
     	
+        request()->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+
     	Task::create([
-    		'title' => $request->input('title'),
-    		'body' => $request->input('body')
+    		'title' => request('title'),
+    		'body' => request('body')
     	]);
     	return redirect('tasks');
     }
@@ -41,6 +47,13 @@ class TaskController extends Controller
 
     public function update(Task $task)
     {
+
+        request()->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+
         $task->update([
             'title' => request('title'),
             'body' => request('body')

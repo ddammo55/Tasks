@@ -11,20 +11,28 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/tasks', 'TaskController@index');
+Route::prefix('tasks')->middleware('auth')->group(function(){
+
+Route::get('/', 'TaskController@index');
 
 Route::get('/create', 'TaskController@create');
 
-Route::post('/tasks', 'TaskController@store');
+Route::post('/', 'TaskController@store');
 
-Route::get('/tasks/{task}', 'TaskController@show');
+Route::get('/{task}', 'TaskController@show');
 
-Route::get('/tasks/{task}/edit', 'TaskController@edit');
+Route::get('/{task}/edit', 'TaskController@edit');
 
-Route::put('/tasks/{task}', 'TaskController@update');
+Route::put('/{task}', 'TaskController@update');
 
-Route::delete('/tasks/{task}', 'TaskController@destory');
+Route::delete('/{task}', 'TaskController@destory');
+
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
